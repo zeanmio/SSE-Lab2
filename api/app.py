@@ -8,5 +8,8 @@ def hello_world():
 @app.route("/submit", methods=["POST"])
 def submit():
     input_name = request.form.get("name")
-    input_age = request.form.get("age")
-    return render_template("hello.html", name=input_name, age=input_age)
+    input_animal = request.form.get("animal")
+    return render_template("hello.html", name=input_name, animal=input_animal)
+
+if __name__ == "__main__":
+    app.run(debug=True)
