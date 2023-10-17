@@ -1,92 +1,45 @@
 <html>
-        <head>
-                <meta charset="UTF-8">
-                <title>Fun Animal Picker</title>
-                <style>
-                        body {
-                                font-family: 'Arial', sans-serif;
-                                background-color: #f5f5f5;
-				padding: 20px;
-                        }
+    <head>
+        <meta charset="UTF-8">
+        <title>Hello Greeting</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f5f5f5;
+                padding: 20px;
+            }
 
-                        h1, h2 {
-                                color: #333;
-                        }
+            h1, h2 {
+                color: #333;
+            }
 
-                        p {
-                                font-size: 18px;
-                                color: #666;
-                        }
+            p {
+                font-size: 18px;
+                color: #666;
+            }
 
-                        .section {
-                                border: 1px solid #ccc;
-                                padding: 20px;
-				margin-top: 20px;
-                                border-radius: 8px;
-                                background-color: #ffffff;
-                                cursor: pointer;
-                        }
+            .section {
+                border: 1px solid #ccc;
+                padding: 20px;
+                margin-top: 20px;
+                border-radius: 8px;
+                background-color: #ffffff;
+            }
+        </style>
+    </head>
 
-                        pre:hover {
-                                background-color: #e6e6e6;
-                        }
+    <body>
+        <h1>Hello!</h1>
 
-			button {
-				margin-bottom: 20px;
-			}
-			
-                        #animalimage {
-                                display: none;
-                                max-width: 200px;
-				margin-bottom: 20px;
-				border: 2px solid #000;
-                                width: 200px;
-                                height: auto;
-                        }
-                </style>
-        </head>
+        <form action="/submit" method="post">
+            <label for="namefield">Your Name:</label>
+            <input type="text" id="namefield" name="name" required>
+            
+            <label for="agefield" style="margin-left: 20px;">Your Age:</label>
+            <input type="number" id="agefield" name="age" required min="0">
+            
+            <input type="submit" value="Submit" style="margin-left: 20px;">
+        </form>
 
-        <body>
-                <h1>Welcome to fun animal picker!</h1>
-                <h2>Cat or Dog</h2>
-
-                <select id="animalselector">
-                        <option value=""> </option>
-                        <option value="Cat">Cat</option>
-                        <option value="Dog">Dog</option>
-                </select>
-
-                <button onclick="showanimal()" style="margin-bottom: 20px;">Click!</button>
-
-                <img id="animalimage" src="">
-
-                <script>
-                        function showanimal(){
-                                var selector = document.getElementById('animalselector');
-                                var image = document.getElementById('animalimage');
-                                
-                                if (selector.value == 'cat') {
-                                        image.src = 'https://media.tenor.com/Eiy9WdHo1WMAAAAd/%E5%B0%8F%E7%8C%AB%E5%90%83%E6%83%8A-what.gif';
-                                        image.style.display = 'block';
-                                } else if (selector.value == 'dog') {
-                                        image.src = 'https://imagepphcloud.thepaper.cn/pph/image/209/835/417.gif';
-                                        image.style.display = 'block';
-                                } else {
-                                        image.style.display = 'none';
-                                }
-                        }
-                </script>
-
-		<form action="/submit" method="post">
-			<label for="namefield">Your Name:</label>
-			<input type="text" id="namefield" name="name">
-			<label for="animalpreference">Preferred Animal:</label>
-			<select id="animalpreference" name="animal">
-				<option value="Cat">Cat</option>
-				<option value="Dog">Dog</option>
-			</select>
-			<input type="submit" value="Submit">
-		</form>
-
-        </body>
+    </body>
 </html>
