@@ -26,10 +26,6 @@ def submit():
 def query():
     q = request.args.get("q")
     result = process_query(q)
-    return result@app.route("/query")
-def query():
-    q = request.args.get("q")
-    result = process_query(q)
     return result
 
 
