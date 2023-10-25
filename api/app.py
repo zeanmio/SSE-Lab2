@@ -7,7 +7,7 @@ def process_query(query):
     if query == "dinosaurs":
         return render_template("dinosaurs.html")
     if query == "asteroids":
-        return "Unknown"
+        return render_template("asteroids.html")
 
 
 @app.route("/")
