@@ -13,3 +13,8 @@ def test_does_not_know_about_asteroids():
 
 def test_knows_team_name():
     assert process_query("What is your name?") == "Team"
+
+
+def test_plus():
+    assert process_query("What is 90 plus 32?) == "122"
+
