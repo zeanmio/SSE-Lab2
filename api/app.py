@@ -8,9 +8,16 @@ def process_query(query):
         return "Dinosaurs ruled the Earth 200 million years ago"
     if query == "asteroids":
         return "Unknown"
-    if query == "What is your name?":
+    if "name" in query:
         return "Team"
-    return "Invalid Query"
+    if "largest" in query:
+        query_words = query.split(" ")
+        numbers = []
+        for word in query_words:
+            if word and word[0].isdigit():
+                word = word[:-1]
+                numbers.append(int(word))
+        return max(numbers)
 
 
 @app.route("/")
