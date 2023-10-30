@@ -8,6 +8,8 @@ def process_query(query):
         return render_template("dinosaurs.html")
     if query == "asteroids":
         return render_template("asteroids.html")
+    elif query == "name":
+        return "Team"
 
 
 @app.route("/")
