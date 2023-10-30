@@ -5,11 +5,12 @@ app = Flask(__name__)
 
 def process_query(query):
     if query == "dinosaurs":
-        return render_template("dinosaurs.html")
+        return "Dinosaurs ruled the Earth 200 million years ago"
     if query == "asteroids":
-        return render_template("asteroids.html")
+        return "Unknown"
     if query == "What is your name?":
         return "Team"
+    return "Invalid Query"
 
 
 @app.route("/")
