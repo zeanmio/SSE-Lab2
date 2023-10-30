@@ -40,12 +40,11 @@ def process_query(query):
         query_words = query.split(" ")
         numbers = []
         for word in query_words:
-            if word[0].isdigit():
-                if word[-1] == "?":
-                    word = word[:-1]
-                    numbers.append(int(word))
-        if numbers:
-            return str(sum(numbers))
+            if word[-1] == "?":
+                word = word[:-1]
+            if word.isdigit():
+                numbers.append(int(word))
+        return str(sum(numbers))
     if "multiplied" in query:
         numbers = [int(word) for word in query.split() if word.isdigit()]
         return str(numbers[0] * numbers[1])
