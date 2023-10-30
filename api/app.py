@@ -18,6 +18,18 @@ def process_query(query):
                 word = word[:-1]
                 numbers.append(int(word))
         return max(numbers)
+    if "plus" in query:
+        query_words = query.split(" ")
+        numbers = []
+        for word in query_words:
+            if word[0].isdigit():
+                if word[-1] == "?":
+                    word = word[:-1]
+                    numbers.append(int(word))
+        if numbers:
+            return sum(numbers)
+        else:
+            return "No numbers found in the query"
 
 
 @app.route("/")
