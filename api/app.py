@@ -8,7 +8,7 @@ def process_query(query):
         return render_template("dinosaurs.html")
     if query == "asteroids":
         return render_template("asteroids.html")
-    if query == "name":
+    if query == "What is your name?":
         return "Team"
 
 
