@@ -17,3 +17,7 @@ def test_knows_team_name():
 
 def test_plus():
     assert process_query("What is 90 plus 32?") == "122"
+
+
+def test_prime():
+    assert process_query("Which of the following numbers are primes: 46, 33, 97, 60, 88?") == "97"

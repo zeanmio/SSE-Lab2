@@ -46,8 +46,6 @@ def process_query(query):
                     numbers.append(int(word))
         if numbers:
             return str(sum(numbers))
-        else:
-            return "No numbers found in the query"
     if "multiplied" in query:
         numbers = [int(word) for word in query.split() if word.isdigit()]
         return str(numbers[0] * numbers[1])
