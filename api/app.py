@@ -51,11 +51,11 @@ def process_query(query):
     if "primes" in query:
         numbers = [int(word) for word in query.split() if word.isdigit()]
         primes = [num for num in numbers if is_prime(num)]
-        return ", ".join(map(str, primes))
+        return "-".join(map(str, primes))
     if "square and a cube" in query:
         numbers = [int(word) for word in query.split() if word.isdigit()]
         result = [num for num in numbers if is_square_and_cube(num)]
-        return ", ".join(map(str, result))
+        return "-".join(map(str, result))
 
 
 @app.route("/")
