@@ -17,7 +17,7 @@ def process_query(query):
             if word and word[0].isdigit():
                 word = word[:-1]
                 numbers.append(int(word))
-        return max(numbers)
+        return str(max(numbers))
     if "plus" in query:
         query_words = query.split(" ")
         numbers = []
@@ -27,7 +27,7 @@ def process_query(query):
                     word = word[:-1]
                     numbers.append(int(word))
         if numbers:
-            return sum(numbers)
+            return str(sum(numbers))
         else:
             return "No numbers found in the query"
 
