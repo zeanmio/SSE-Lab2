@@ -86,7 +86,8 @@ def process_query(query):
     elif "a square and a cube" in query:
         return arithmetic_operation(query, "a square and a cube")
 
-    return "Invalid query"
+    else:
+        return "Invalid query"
 
 
 @app.route("/")
