@@ -3,6 +3,43 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
+def extract_numbers_from_query(query):
+    query_words = query.split(" ")
+    numbers = []
+
+    for word in query_words:
+        cleaned_word = "".join(filter(str.isdigit, word))
+        if cleaned_word:
+            numbers.append(int(cleaned_word))
+
+    return numbers
+
+
+def arithmetic_operation(query, operator):
+    numbers = extract_numbers_from_query(query)
+
+    if operator == "plus":
+        return str(numbers[0] + numbers[1])
+    elif operator == "minus":
+        return str(numbers[0] - numbers[1])
+    elif operator == "multiplied":
+        return str(numbers[0] * numbers[1])
+    elif operator == "largest":
+        return str(max(numbers))
+    elif operator == "primes":
+        for num in numbers:
+            if is_prime(num):
+                return str(num)
+        return "No primes found"
+    elif operator == "a square and a cube":
+        for num in numbers:
+            if is_square_and_cube(num):
+                return str(num)
+        return "No numbers that are both square and cube found"
+    else:
+        return "Unknown operation"
+
+
 def is_prime(n):
     if n <= 1:
         return False
@@ -24,38 +61,32 @@ def is_square_and_cube(n):
 def process_query(query):
     if query == "dinosaurs":
         return "Dinosaurs ruled the Earth 200 million years ago"
-    if query == "asteroids":
+
+    elif query == "asteroids":
         return "Unknown"
-    if "name" in query:
-        return "Team"
-    if "largest" in query:
-        query_words = query.split(" ")
-        numbers = []
-        for word in query_words:
-            if word and word[0].isdigit():
-                word = word[:-1]
-                numbers.append(int(word))
-        return str(max(numbers))
-    if "plus" in query:
-        query_words = query.split(" ")
-        numbers = []
-        for word in query_words:
-            if word[-1] == "?":
-                word = word[:-1]
-            if word.isdigit():
-                numbers.append(int(word))
-        return str(sum(numbers))
-    if "multiplied" in query:
-        numbers = [int(word) for word in query.split() if word.isdigit()]
-        return str(numbers[0] * numbers[1])
-    if "primes" in query:
-        numbers = [int(word) for word in query.split() if word.isdigit()]
-        primes = [num for num in numbers if is_prime(num)]
-        return "-".join(map(str, primes))
-    if "square and a cube" in query:
-        numbers = [int(word) for word in query.split() if word.isdigit()]
-        result = [num for num in numbers if is_square_and_cube(num)]
-        return "-".join(map(str, result))
+
+    elif "name" in query:
+        return "team"
+
+    elif "plus" in query:
+        return arithmetic_operation(query, "plus")
+
+    elif "minus" in query:
+        return arithmetic_operation(query, "minus")
+
+    elif "multiplied" in query:
+        return arithmetic_operation(query, "multiplied")
+
+    elif "largest" in query:
+        return arithmetic_operation(query, "largest")
+
+    elif "primes" in query:
+        return arithmetic_operation(query, "primes")
+
+    elif "a square and a cube" in query:
+        return arithmetic_operation(query, "a square and a cube")
+
+    return "Invalid query"
 
 
 @app.route("/")
