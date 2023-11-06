@@ -1,13 +1,37 @@
-<!-- templates/hello_github_user.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello GitHub User</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hello GitHub User</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center; /* Centers the content horizontally */
+        align-items: center; /* Centers the content vertically */
+        min-height: 100vh; /* At least the height of the viewport */
+    }
+    table {
+        width: 100%; /* Full width */
+        max-width: 960px; /* Maximum width */
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+    th, td {
+        text-align: left; /* Aligns text to the left */
+        padding: 8px; /* Adds space around content */
+        border-bottom: 1px solid #ddd; /* Adds a border line between rows */
+    }
+    th {
+        background-color: #f4f4f4;
+    }
+</style>
 </head>
 <body>
-    <h1>GitHub Repositories for {{ username }}</h1>
     <table>
         <thead>
             <tr>
