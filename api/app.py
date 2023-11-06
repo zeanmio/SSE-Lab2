@@ -109,10 +109,10 @@ def github_form():
     return render_template("github_username.html")
 
 
-@app.route("/hello_github_user", methods=["GET"])
+@app.route("/hello_github_user", methods=["POST"])
 def hello_github_user():
-    username = request.args.get("username")
-    search_term = request.args.get("search_term", "")
+    username = request.form.get("username")
+    search_term = request.form.get("search_term", "")
     response = requests.get(f"https://api.github.com/users/{username}/repos")
     repos_data = []
     language_counts = {}
