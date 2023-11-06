@@ -31,10 +31,18 @@
         th {
             background-color: #f4f4f4;
         }
+        .table-container, .chart-container {
+            width: 100%; /* Or set to the desired width */
+            display: block; /* Ensures it's a block-level element */
+            clear: both; /* Clears past floats */
+            margin: auto; /* Center align the div if less than 100% width */
+        }
+        
     </style>
 </head>
 
 <body>
+    <div class="table-container">
     <table>
         <thead>
             <tr>
@@ -59,11 +67,12 @@
             {% endfor %}
         </tbody>
     </table>
+    </div>
 
-    <div style="max-width: 600px; margin: 20px auto;">
+    <div class="chart-container" style="width: 100%; max-width: 600px; margin: 20px auto;">
         <canvas id="languageChart"></canvas>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('languageChart').getContext('2d');
@@ -92,6 +101,9 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false, // Set to false to fit the container
+                legend: {
+                    display: false  // This will hide the legend
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
