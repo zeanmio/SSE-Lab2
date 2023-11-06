@@ -102,6 +102,17 @@ def submit():
     return render_template("hello.html", name=input_name, age=input_age)
 
 
+@app.route("/github_form")
+def github_form():
+    return render_template("github_username.html")
+
+
+@app.route("/hello_github_user", methods=["POST"])
+def hello_github_user():
+    username = request.form.get("username")
+    return render_template("hello_github_user.html", username=username)
+
+
 @app.route("/query/<q>")
 def query(q):
     result = process_query(q)
