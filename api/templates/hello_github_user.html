@@ -7,10 +7,21 @@
 </head>
 <body>
     <h1>Hello {{ username }}</h1>
-    <ul>
-        {% for repo_name in repo_names %}
-        <li>{{ repo_name }}</li>
-        {% endfor %}
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Repository Name</th>
+                <th>Last Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for repo in repos_data %}
+            <tr>
+                <td>{{ repo.name }}</td>
+                <td>{{ repo.updated_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

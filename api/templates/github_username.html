@@ -1,28 +1,16 @@
+<!-- templates/github_username.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello GitHub User</title>
+    <title>GitHub Username Form</title>
 </head>
 <body>
-    <h1>Hello {{ username }}</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Repository Name</th>
-                <th>Last Updated</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for repo in repos_data %}
-            <tr>
-                <td>{{ repo.name }}</td>
-                <td>{{ repo.updated_at }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <form action="/hello_github_user" method="post">
+        <label for="username">GitHub Username:</label>
+        <input type="text" id="username" name="username" required>
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>
-
