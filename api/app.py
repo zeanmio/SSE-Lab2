@@ -117,29 +117,31 @@ def hello_github_user():
 
     if response.status_code == 200:
         for repo in response.json():
-            # Break up the string to adhere to PEP 8 line length
+            updated_at = datetime.strptime(
+                repo['updated_at'], "%Y-%m-%dT%H:%M:%SZ"
+            ).strftime("%Y-%m-%d %H:%M:%S")
+
             commits_url = repo["commits_url"].split("{")[0]
             commits_response = requests.get(commits_url)
 
             if commits_response.status_code == 200:
                 latest_commit = commits_response.json()[0]
-                # Format the date in a separate line to avoid long lines
-                updated_at = datetime.strptime(
-                    repo["updated_at"], "%Y-%m-%dT%H:%M:%SZ"
+                commit_author_date = latest_commit["commit"]["author"]["date"]
+                formatted_commit_date = datetime.strptime(
+                    commit_author_date, "%Y-%m-%dT%H:%M:%SZ"
                 ).strftime("%Y-%m-%d %H:%M:%S")
-                commit_date = datetime.strptime(
-                    latest_commit["commit"]["author"]["date"],
-                    "%Y-%m-%dT%H:%M:%SZ"
-                ).strftime("%Y-%m-%d %H:%M:%S")
+
+                commit_author_name = latest_commit["commit"]["author"]["name"]
+                commit_message = latest_commit["commit"]["message"]
+                commit_sha = latest_commit["sha"]
+
                 commit_data = {
                     "name": repo["name"],
                     "updated_at": updated_at,
-                    "latest_commit_hash": latest_commit["sha"],
-                    "latest_commit_author": latest_commit["commit"]
-                    / ["author"]["name"],
-                    "latest_commit_date": commit_date,
-                    "latest_commit_message": latest_commit["commit"]
-                    / ["message"],
+                    "latest_commit_hash": commit_sha,
+                    "latest_commit_author": commit_author_name,
+                    "latest_commit_date": formatted_commit_date,
+                    "latest_commit_message": commit_message,
                 }
                 repos_data.append(commit_data)
 
