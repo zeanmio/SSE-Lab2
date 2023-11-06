@@ -183,11 +183,11 @@
             repositories.forEach(repo => {
                 const row = tableBody.insertRow();
                 row.insertCell(0).textContent = repo.name;
-                row.insertCell(1).textContent = new Date(repo.updated_at).toLocaleString();
-                row.insertCell(2).textContent = repo.pushed_at;
-                row.insertCell(3).textContent = repo.owner.login;
-                row.insertCell(4).textContent = new Date(repo.pushed_at).toLocaleString();
-                row.insertCell(5).textContent = repo.description;
+                row.insertCell(1).textContent = repo.updated_at;
+                row.insertCell(2).textContent = repo.latest_commit_hash;
+                row.insertCell(3).textContent = repo.latest_commit_author;
+                row.insertCell(4).textContent = repo.latest_commit_date;
+                row.insertCell(5).textContent = repo.latest_commit_message;
             });
         }
     </script>
