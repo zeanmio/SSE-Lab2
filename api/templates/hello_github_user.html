@@ -1,3 +1,4 @@
+<!-- templates/hello_github_user.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +7,16 @@
     <title>Hello GitHub User</title>
 </head>
 <body>
-    <h1>Hello {{ username }}</h1>
+    <h1>GitHub Repositories for {{ username }}</h1>
     <table>
         <thead>
             <tr>
                 <th>Repository Name</th>
                 <th>Last Updated</th>
+                <th>Latest Commit Hash</th>
+                <th>Latest Commit Author</th>
+                <th>Latest Commit Date</th>
+                <th>Latest Commit Message</th>
             </tr>
         </thead>
         <tbody>
@@ -19,6 +24,10 @@
             <tr>
                 <td>{{ repo.name }}</td>
                 <td>{{ repo.updated_at }}</td>
+                <td>{{ repo.latest_commit_hash }}</td>
+                <td>{{ repo.latest_commit_author }}</td>
+                <td>{{ repo.latest_commit_date }}</td>
+                <td>{{ repo.latest_commit_message }}</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from datetime import datetime
 import requests
 
 app = Flask(__name__)
@@ -112,15 +113,38 @@ def github_form():
 def hello_github_user():
     username = request.form.get("username")
     response = requests.get(f"https://api.github.com/users/{username}/repos")
+    repos_data = []
+
     if response.status_code == 200:
-        repos = response.json()
-        # Create a list of repository names
-        repo_names = [repo["full_name"] for repo in repos]
-    else:
-        repo_names = ["Error: Could not fetch repos"]
+        for repo in response.json():
+            # Break up the string to adhere to PEP 8 line length
+            commits_url = repo["commits_url"].split("{")[0]
+            commits_response = requests.get(commits_url)
+
+            if commits_response.status_code == 200:
+                latest_commit = commits_response.json()[0]
+                # Format the date in a separate line to avoid long lines
+                updated_at = datetime.strptime(
+                    repo["updated_at"], "%Y-%m-%dT%H:%M:%SZ"
+                ).strftime("%Y-%m-%d %H:%M:%S")
+                commit_date = datetime.strptime(
+                    latest_commit["commit"]["author"]["date"],
+                    "%Y-%m-%dT%H:%M:%SZ"
+                ).strftime("%Y-%m-%d %H:%M:%S")
+                commit_data = {
+                    "name": repo["name"],
+                    "updated_at": updated_at,
+                    "latest_commit_hash": latest_commit["sha"],
+                    "latest_commit_author": latest_commit["commit"]
+                    / ["author"]["name"],
+                    "latest_commit_date": commit_date,
+                    "latest_commit_message": latest_commit["commit"]
+                    / ["message"],
+                }
+                repos_data.append(commit_data)
 
     return render_template(
-        "hello_github_user.html", username=username, repo_names=repo_names
+        "hello_github_user.html", username=username, repos_data=repos_data
     )
 
 
