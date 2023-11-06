@@ -16,6 +16,7 @@
             justify-content: center; /* Centers the content horizontally */
             align-items: center; /* Centers the content vertically */
             min-height: 100vh; /* At least the height of the viewport */
+            flex-direction: column; /* Aligns the content vertically */
         }
         table {
             width: 100%; /* Full width */
@@ -37,7 +38,6 @@
             clear: both; /* Clears past floats */
             margin: auto; /* Center align the div if less than 100% width */
         }
-        
     </style>
 </head>
 
@@ -100,15 +100,16 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false, // Set to false to fit the container
-                legend: {
-                    display: false  // This will hide the legend
+                maintainAspectRatio: false,
+                legend: { display: false },
+                tooltips: {
+                    callbacks: {
+                        label: function() { return null; }
+                    }
                 },
                 scales: {
                     yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
+                        ticks: { beginAtZero: true }
                     }]
                 }
             }
