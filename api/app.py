@@ -119,7 +119,7 @@ def hello_github_user():
     if response.status_code == 200:
         for repo in response.json():
             updated_at = datetime.strptime(
-                repo['updated_at'], "%Y-%m-%dT%H:%M:%SZ"
+                repo["updated_at"], "%Y-%m-%dT%H:%M:%SZ"
             ).strftime("%Y-%m-%d %H:%M:%S")
 
             commits_url = repo["commits_url"].split("{")[0]
@@ -145,10 +145,11 @@ def hello_github_user():
                     "latest_commit_message": commit_message,
                 }
                 repos_data.append(commit_data)
-                
-                language = repo.get('language', None)
+
+                language = repo.get("language", None)
                 if language:
-                    language_counts[language] = language_counts.get(language, 0) + 1
+                    current_count = language_counts.get(language, 0)
+                    language_counts[language] = current_count + 1
 
     languages = list(language_counts.keys())
     counts = list(language_counts.values())
@@ -158,7 +159,7 @@ def hello_github_user():
         username=username,
         repos_data=repos_data,
         languages=languages,
-        counts=counts
+        counts=counts,
     )
 
 
