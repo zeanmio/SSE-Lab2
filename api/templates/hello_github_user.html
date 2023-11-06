@@ -135,34 +135,6 @@
                 }
             }
         });
-
-        const ctx = document.getElementById('languageBarChart').getContext('2d');
-        const languageBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {{ repo_names | tojson }},
-                datasets: [{
-                    label: 'Bytes of Code',
-                    data: {{ code_sizes | tojson }},
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                },
-                legend: {
-                    display: false
-                }
-            }
-        });
-
     </script>
 </body>
 </html>
