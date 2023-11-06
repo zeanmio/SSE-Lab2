@@ -59,8 +59,13 @@
 <body>
     <h1>Hello, {{username}}!</h1>
 
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Enter repository name...">
+        <button id="searchButton" type="button">Search</button>
+    </div>
+
     <div class="table-container">
-    <table>
+    <table id="repoTable">
         <thead>
             <tr>
                 <th>Repository Name</th>
@@ -148,11 +153,6 @@
             }
         });
     </script>
-
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Enter repository name...">
-        <button id="searchButton" type="button">Search</button>
-    </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -161,57 +161,35 @@
                 searchRepositories(searchTerm);
             });
         });
-    
+        
         function searchRepositories(searchTerm) {
-            fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(searchTerm)}`)
+            const username = "{{username}}"; // Replace with server-side template rendering
+            fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(searchTerm)}+user:${encodeURIComponent(username)}`)
                 .then(response => response.json())
                 .then(data => {
-                    displaySearchResults(data.items);
+                    updateTable(data.items);
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
         }
-    
-        function displaySearchResults(repositories) {
-            const resultsContainer = document.createElement('div');
-            resultsContainer.id = 'searchResults';
-            resultsContainer.addEventListener('click', function(event) {
-                if (event.target.classList.contains('details-button')) {
-                    const fullName = event.target.getAttribute('data-full-name');
-                    displayRepositoryDetails(fullName);
-                }
-            });
-
-            const existingResults = document.getElementById('searchResults');
-            if (existingResults) {
-                existingResults.parentNode.removeChild(existingResults);
-            }
-
+        
+        function updateTable(repositories) {
+            const tableBody = document.getElementById('repoTable').getElementsByTagName('tbody')[0];
+            // Clear the table first
+            tableBody.innerHTML = '';
+        
+            // Populate the table with new results
             repositories.forEach(repo => {
-                const repoElement = document.createElement('div');
-                repoElement.innerHTML = `
-                    <h2>${repo.name}</h2>
-                    <p>${repo.description}</p>
-                    <button onclick="displayRepositoryDetails('${repo.full_name}')">View Details</button>
-                `;
-                resultsContainer.appendChild(repoElement);
+                const row = tableBody.insertRow();
+                row.insertCell(0).textContent = repo.name;
+                row.insertCell(1).textContent = new Date(repo.updated_at).toLocaleString();
+                row.insertCell(2).textContent = repo.pushed_at;
+                row.insertCell(3).textContent = repo.owner.login;
+                row.insertCell(4).textContent = new Date(repo.pushed_at).toLocaleString();
+                row.insertCell(5).textContent = repo.description;
             });
-            
-            document.body.appendChild(resultsContainer);
-        }
-    
-        function displayRepositoryDetails(fullName) {
-            fetch(`https://api.github.com/repos/${fullName}`)
-                .then(response => response.json())
-                .then(repoDetails => {
-                    console.log(repoDetails);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
         }
     </script>
-    
 </body>
 </html>
