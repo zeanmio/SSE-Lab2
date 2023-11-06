@@ -125,13 +125,20 @@
                     title: {
                         display: true,
                         text: 'Languages Used in Repositories',
-                        fontSize: 16,
+                        font: {
+                            size: 16
+                        },
                         fontStyle: 'normal'
                     }
                 },
                 tooltips: { enabled: false },
                 scales: {
-                    yAxes: [{ display: false }]
+                    x: {
+                        display: true
+                    },
+                    y: {
+                        display: false
+                    }
                 }
             }
         });
