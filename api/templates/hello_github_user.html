@@ -44,7 +44,7 @@
 </head>
 
 <body>
-    <h1>Hello, {{username}}</h1>
+    <h1>Hello, {{username}}!</h1>
 
     <div class="table-container">
     <table>
@@ -92,7 +92,13 @@
                         'rgba(255, 206, 86, 0.2)', // pastel yellow
                         'rgba(75, 192, 192, 0.2)', // pastel green
                         'rgba(153, 102, 255, 0.2)', // pastel purple
-                        'rgba(255, 159, 64, 0.2)'  // pastel orange
+                        'rgba(255, 159, 64, 0.2)',  // pastel orange
+                        'rgba(255, 87, 34, 0.2)',  // pastel deep orange
+                        'rgba(156, 39, 176, 0.2)', // pastel deep purple
+                        'rgba(33, 150, 243, 0.2)', // pastel blue
+                        'rgba(0, 150, 136, 0.2)',  // pastel teal
+                        'rgba(205, 220, 57, 0.2)', // pastel lime
+                        'rgba(255, 193, 7, 0.2)'   // pastel amber
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)', // solid red
@@ -100,7 +106,13 @@
                         'rgba(255, 206, 86, 1)', // solid yellow
                         'rgba(75, 192, 192, 1)', // solid green
                         'rgba(153, 102, 255, 1)', // solid purple
-                        'rgba(255, 159, 64, 1)'  // solid orange
+                        'rgba(255, 159, 64, 1)',  // solid orange
+                        'rgba(255, 87, 34, 1)',  // solid deep orange
+                        'rgba(156, 39, 176, 1)', // solid deep purple
+                        'rgba(33, 150, 243, 1)', // solid blue
+                        'rgba(0, 150, 136, 1)',  // solid teal
+                        'rgba(205, 220, 57, 1)', // solid lime
+                        'rgba(255, 193, 7, 1)'   // solid amber
                     ],
                     borderWidth: 1
                 }]
@@ -123,6 +135,34 @@
                 }
             }
         });
+
+        const ctx = document.getElementById('languageBarChart').getContext('2d');
+        const languageBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ repo_names | tojson }},
+                datasets: [{
+                    label: 'Bytes of Code',
+                    data: {{ code_sizes | tojson }},
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                }
+            }
+        });
+
     </script>
 </body>
 </html>
