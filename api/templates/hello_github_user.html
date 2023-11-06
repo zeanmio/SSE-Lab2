@@ -59,11 +59,6 @@
 <body>
     <h1>Hello, {{username}}!</h1>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Enter repository name...">
-        <button id="searchButton" type="button">Search</button>
-    </div>
-
     <div class="table-container">
     <table>
         <thead>
@@ -154,6 +149,11 @@
         });
     </script>
 
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Enter repository name...">
+        <button id="searchButton" type="button">Search</button>
+    </div>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('searchButton').addEventListener('click', function () {
@@ -176,10 +176,18 @@
         function displaySearchResults(repositories) {
             const resultsContainer = document.createElement('div');
             resultsContainer.id = 'searchResults';
+            resultsContainer.addEventListener('click', function(event) {
+                if (event.target.classList.contains('details-button')) {
+                    const fullName = event.target.getAttribute('data-full-name');
+                    displayRepositoryDetails(fullName);
+                }
+            });
+
             const existingResults = document.getElementById('searchResults');
             if (existingResults) {
                 existingResults.parentNode.removeChild(existingResults);
             }
+
             repositories.forEach(repo => {
                 const repoElement = document.createElement('div');
                 repoElement.innerHTML = `
@@ -189,6 +197,7 @@
                 `;
                 resultsContainer.appendChild(repoElement);
             });
+            
             document.body.appendChild(resultsContainer);
         }
     
