@@ -60,45 +60,47 @@
         </tbody>
     </table>
 
-    <div style="width:300px; height:300px; margin:auto;">
-    <canvas id="languageChart" width="50" height="50"></canvas>
+    <div style="max-width: 600px; margin: 20px auto;">
+        <canvas id="languageChart"></canvas>
+    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('languageChart').getContext('2d');
         const languageChart = new Chart(ctx, {
-            type: 'pie',
+            type: 'bar', // Changed to 'bar' for a bar chart
             data: {
                 labels: {{ languages | tojson }},
                 datasets: [{
                     label: 'Programming Languages',
                     data: {{ counts | tojson }},
                     backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)', // pastel red
                         'rgba(54, 162, 235, 0.2)', // pastel blue
-                        'rgba(75, 192, 192, 0.2)',  // pastel green
-                        'rgba(153, 102, 255, 0.2)', // pastel purple
-                        'rgba(255, 159, 64, 0.2)'   // pastel orange
+                        'rgba(255, 206, 86, 0.2)', // pastel yellow
+                        // ... more colors for each language
                     ],
                     borderColor: [
+                        'rgba(255, 99, 132, 1)', // solid red
                         'rgba(54, 162, 235, 1)', // solid blue
-                        'rgba(75, 192, 192, 1)',  // solid green
-                        'rgba(153, 102, 255, 1)', // solid purple
-                        'rgba(255, 159, 64, 1)'   // solid orange
+                        'rgba(255, 206, 86, 1)', // solid yellow
+                        // ... more border colors for each language
                     ],
                     borderWidth: 1
                 }]
             },
             options: {
                 responsive: true,
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Language Breakdown'
+                maintainAspectRatio: false, // Set to false to fit the container
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
             }
         });
     </script>
-    </div>
 </body>
 </html>
