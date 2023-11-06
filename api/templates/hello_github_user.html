@@ -87,10 +87,6 @@
                 <td>{{ repo.latest_commit_date }}</td>
                 <td>{{ repo.latest_commit_message }}</td>
             </tr>
-            {% else %}
-            <tr>
-                <td colspan="6">No repositories found.</td>
-            </tr>
             {% endfor %}
         </tbody>
     </table>
