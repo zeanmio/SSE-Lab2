@@ -6,33 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello GitHub User</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center; /* Centers the content horizontally */
-        align-items: center; /* Centers the content vertically */
-        min-height: 100vh; /* At least the height of the viewport */
-    }
-    table {
-        width: 100%; /* Full width */
-        max-width: 960px; /* Maximum width */
-        margin-top: 20px;
-        border-collapse: collapse;
-    }
-    th, td {
-        text-align: left; /* Aligns text to the left */
-        padding: 8px; /* Adds space around content */
-        border-bottom: 1px solid #ddd; /* Adds a border line between rows */
-    }
-    th {
-        background-color: #f4f4f4;
-    }
-</style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Centers the content horizontally */
+            align-items: center; /* Centers the content vertically */
+            min-height: 100vh; /* At least the height of the viewport */
+        }
+        table {
+            width: 100%; /* Full width */
+            max-width: 960px; /* Maximum width */
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left; /* Aligns text to the left */
+            padding: 8px; /* Adds space around content */
+            border-bottom: 1px solid #ddd; /* Adds a border line between rows */
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
 </head>
+
 <body>
     <table>
         <thead>
@@ -58,5 +59,48 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <canvas id="languageChart" width="400" height="400"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('languageChart').getContext('2d');
+        const languageChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: {{ languages | tojson }},
+                datasets: [{
+                    label: 'Programming Languages',
+                    data: {{ counts | tojson }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)', // pastel red
+                        'rgba(54, 162, 235, 0.2)', // pastel blue
+                        'rgba(255, 206, 86, 0.2)',  // pastel yellow
+                        'rgba(75, 192, 192, 0.2)',  // pastel green
+                        'rgba(153, 102, 255, 0.2)', // pastel purple
+                        'rgba(255, 159, 64, 0.2)'   // pastel orange
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)', // solid red
+                        'rgba(54, 162, 235, 1)', // solid blue
+                        'rgba(255, 206, 86, 1)',  // solid yellow
+                        'rgba(75, 192, 192, 1)',  // solid green
+                        'rgba(153, 102, 255, 1)', // solid purple
+                        'rgba(255, 159, 64, 1)'   // solid orange
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Language Breakdown'
+                }
+            }
+        });
+    </script>
 </body>
 </html>

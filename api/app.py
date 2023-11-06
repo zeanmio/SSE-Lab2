@@ -114,6 +114,7 @@ def hello_github_user():
     username = request.form.get("username")
     response = requests.get(f"https://api.github.com/users/{username}/repos")
     repos_data = []
+    language_counts = {}
 
     if response.status_code == 200:
         for repo in response.json():
@@ -144,9 +145,20 @@ def hello_github_user():
                     "latest_commit_message": commit_message,
                 }
                 repos_data.append(commit_data)
+                
+                language = repo.get('language', None)
+                if language:
+                    language_counts[language] = language_counts.get(language, 0) + 1
+
+    languages = list(language_counts.keys())
+    counts = list(language_counts.values())
 
     return render_template(
-        "hello_github_user.html", username=username, repos_data=repos_data
+        "hello_github_user.html",
+        username=username,
+        repos_data=repos_data,
+        languages=languages,
+        counts=counts
     )
 
 
