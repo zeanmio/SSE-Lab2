@@ -109,9 +109,10 @@ def github_form():
     return render_template("github_username.html")
 
 
-@app.route("/hello_github_user", methods=["POST"])
+@app.route("/hello_github_user", methods=["GET", "POST"])
 def hello_github_user():
     username = request.form.get("username")
+    search_term = request.args.get("search_term", "")
     response = requests.get(f"https://api.github.com/users/{username}/repos")
     repos_data = []
     language_counts = {}
@@ -150,6 +151,12 @@ def hello_github_user():
                 if language:
                     current_count = language_counts.get(language, 0)
                     language_counts[language] = current_count + 1
+
+    if search_term:
+        repos_data = [
+            repo for repo in repos_data
+            if search_term.lower() in repo["name"].lower()
+        ]
 
     languages = list(language_counts.keys())
     counts = list(language_counts.values())
