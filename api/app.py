@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, requests
 
 app = Flask(__name__)
 
@@ -110,7 +110,17 @@ def github_form():
 @app.route("/hello_github_user", methods=["POST"])
 def hello_github_user():
     username = request.form.get("username")
-    return render_template("hello_github_user.html", username=username)
+    response = requests.get(f"https://api.github.com/users/{username}/repos")
+    if response.status_code == 200:
+        repos = response.json()
+        # Create a list of repository names
+        repo_names = [repo["full_name"] for repo in repos]
+    else:
+        repo_names = ["Error: Could not fetch repos"]
+
+    return render_template(
+        "hello_github_user.html", username=username, repo_names=repo_names
+    )
 
 
 @app.route("/query/<q>")
