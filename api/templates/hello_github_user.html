@@ -13,35 +13,38 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center; /* Centers the content horizontally */
-            align-items: center; /* Centers the content vertically */
-            min-height: 100vh; /* At least the height of the viewport */
-            flex-direction: column; /* Aligns the content vertically */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            text-align: center;
+        }
+        h1 {
+            margin-yop: 0;
+        }
+        .table-container, .chart-container {
+            width: 100%;
+            max-width: 960px;
+            margin-top: 20px auto;
         }
         table {
-            width: 100%; /* Full width */
-            max-width: 960px; /* Maximum width */
-            margin-top: 20px;
             border-collapse: collapse;
+            margin: auto;
         }
         th, td {
-            text-align: left; /* Aligns text to the left */
-            padding: 8px; /* Adds space around content */
-            border-bottom: 1px solid #ddd; /* Adds a border line between rows */
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
         }
         th {
             background-color: #f4f4f4;
-        }
-        .table-container, .chart-container {
-            width: 100%; /* Or set to the desired width */
-            display: block; /* Ensures it's a block-level element */
-            clear: both; /* Clears past floats */
-            margin: auto; /* Center align the div if less than 100% width */
         }
     </style>
 </head>
 
 <body>
+    <h1>Hello, {{username}}</h1>
+
     <div class="table-container">
     <table>
         <thead>
@@ -69,7 +72,7 @@
     </table>
     </div>
 
-    <div class="chart-container" style="width: 100%; max-width: 600px; margin: 20px auto;">
+    <div class="chart-container">
         <canvas id="languageChart"></canvas>
     </div>
 
@@ -77,23 +80,26 @@
     <script>
         const ctx = document.getElementById('languageChart').getContext('2d');
         const languageChart = new Chart(ctx, {
-            type: 'bar', // Changed to 'bar' for a bar chart
+            type: 'pie',
             data: {
                 labels: {{ languages | tojson }},
                 datasets: [{
-                    label: 'Programming Languages',
                     data: {{ counts | tojson }},
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)', // pastel red
                         'rgba(54, 162, 235, 0.2)', // pastel blue
                         'rgba(255, 206, 86, 0.2)', // pastel yellow
-                        // ... more colors for each language
+                        'rgba(75, 192, 192, 0.2)', // pastel green
+                        'rgba(153, 102, 255, 0.2)', // pastel purple
+                        'rgba(255, 159, 64, 0.2)'  // pastel orange
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)', // solid red
                         'rgba(54, 162, 235, 1)', // solid blue
                         'rgba(255, 206, 86, 1)', // solid yellow
-                        // ... more border colors for each language
+                        'rgba(75, 192, 192, 1)', // solid green
+                        'rgba(153, 102, 255, 1)', // solid purple
+                        'rgba(255, 159, 64, 1)'  // solid orange
                     ],
                     borderWidth: 1
                 }]
@@ -102,15 +108,15 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 legend: { display: false },
-                tooltips: {
-                    callbacks: {
-                        label: function() { return null; }
-                    }
+                title: {
+                    display: true,
+                    text: 'Languages Used in Repositories'
+                    fontSize: 16,
+                    fontStyle: 'normal'
                 },
+                tooltips: { enabled: false },
                 scales: {
-                    yAxes: [{
-                        ticks: { beginAtZero: true }
-                    }]
+                    yAxes: [{ display: false }]
                 }
             }
         });
