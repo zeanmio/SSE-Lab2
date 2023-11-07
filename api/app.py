@@ -163,7 +163,7 @@ def hello_github_user():
 
     languages = list(language_counts.keys())
     counts = list(language_counts.values())
-    
+
     print(repos_data)
 
     return render_template(
