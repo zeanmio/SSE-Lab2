@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
 import requests
 
@@ -104,15 +104,18 @@ def submit():
     return render_template("hello.html", name=input_name, age=input_age)
 
 
-@app.route("/github_form")
+@app.route("/github_form", methods=["GET", "POST"])
 def github_form():
+    if request.method == "POST":
+        username = request.form.get("username")
+        return redirect(url_for('hello_github_user', username=username))
     return render_template("github_username.html")
 
 
-@app.route("/hello_github_user", methods=["POST"])
+@app.route("/hello_github_user", methods=["GET"])
 def hello_github_user():
-    username = request.form.get("username")
-    search_term = request.form.get("search_term", "")
+    username = request.args.get("username")
+    search_term = request.args.get("search_term", "").lower()
     response = requests.get(f"https://api.github.com/users/{username}/repos")
     repos_data = []
     language_counts = {}
